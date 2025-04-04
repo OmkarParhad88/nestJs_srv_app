@@ -1,6 +1,7 @@
 import { Body, Controller, Get,Post, Param, ParseBoolPipe, ParseIntPipe, ValidationPipe } from "@nestjs/common";
 import { BookPipe } from "./Pipes/book.pipe";
 import { Book } from "./book.dto";
+import { bookException } from "./book.exception";
 
 @Controller('book')
 export class BookController {
@@ -9,6 +10,11 @@ export class BookController {
   findBookById(@Param('id' , ParseIntPipe) id: number): string {
     console.log(id, typeof(id));
     return "Book by id :"+ id;
+  }
+
+  @Get()
+  helloException(): string {
+    throw new bookException();
   }
 
   @Get("/name/:id")

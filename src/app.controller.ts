@@ -1,11 +1,10 @@
-import { Controller, Post, Req, Res, UseInterceptors } from "@nestjs/common";
-import { AppInterceptor } from "./app.interceptor";
-import { Request, Response } from "express";
+import { Controller, Get, Request, UseGuards } from "@nestjs/common";
+import { AuthGuard } from "@nestjs/passport";
 @Controller("app")
 export class AppController {
-  @Post('')
-  @UseInterceptors(AppInterceptor)
-  getHello(): string {
-    return "this is app controller";
+  @Get('')
+  @UseGuards(AuthGuard("local"))
+  getHello(@Request() req): string|undefined {
+    return req.user;
   }
 }
